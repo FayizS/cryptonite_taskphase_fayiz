@@ -1,1 +1,1 @@
-[View the PDF](docs/Linux_Luminarium_notes.pdf)
+[View the PDF](Linux_Luminarium_notes.pdf)
