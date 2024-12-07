@@ -5,29 +5,29 @@
 - is an operation that looks like this: 2<sup>10</sup> mod 17.
 - used to build a trapdoor function(easy to compute in one way).
 - To find the solution of 101<sup>17</sup> mod 22663 I used the python function pow(base, exponent, modulus).
-```
+```python
 >>>print(pow(101,17,22663))
 19906
 ```
 #### Public Keys
 - Exponent and modulus form of an RSA "public key" is (N,e) where N = p*q (two prime numbers) & e is the Exponent.
 - To "Encrypt" 12, I used the pow() function in python.
-```
+```python
 >>>print(pow(12,65537,17*23))
 301
 ```
 #### Euler's Totient
 - Is a Multiplicative Function &Phi;(N) which counts the number of primes which are less than a number N.
 - To find the Euler's Totient of N=p*q, I used the formula (p-1)*(q-1).
-```
+```python
 p = 857504083339712752489993810777
 q = 1029224947942998075080348647219
 print((p-1)*(q-1))
 >882564595536224140639625987657529300394956519977044270821168
 ```
 #### Private Keys
-- Private Key 'd' is used to decrypt ciphertexts, it's given by d = <sup>-1</sup> mod &Phi;(N)
-  ```
+- Private Key 'd' is used to decrypt ciphertexts, it's given by d = e<sup>-1</sup> mod &Phi;(N)
+  ```python
   p = 857504083339712752489993810777
   q = 1029224947942998075080348647219  
   phi = (p-1)*(q-1)
@@ -37,7 +37,7 @@ print((p-1)*(q-1))
   ```
 #### RSA Decryption
 - After a bit of research I found that decryption can be done using the formula _data = c<sup>d</sup> mod N_ where c -> cipher text, d -> private key.
-```
+```python
 p = 857504083339712752489993810777
 q = 1029224947942998075080348647219
 phi = (p-1)*(q-1)
@@ -50,10 +50,10 @@ print(pow(c,d,N))
 ```
 #### RSA Signature
 -First I tried to do the sha256 encoding using a website, this gave me the wrong signature. Later I did the encoding in python itself and got the correct answer because in python it converts the string to a sequence of bytes then encodes it.
-- _.encode()_ converts string to a sequence of bytes then the _sha256()_ encodes it, and _digest()_ returns it as raw binary data.
+- `.encode()` converts string to a sequence of bytes then the `sha256()` encodes it, and `digest()` returns it as raw binary data.
 - Signature, _S = H(m)<sup>d</sup> mod N_
 - This challenge required me to use the Crypto.Util package to convert the bytes to Long for the mathematical calculation.
-  ```
+  ```python
   import Crypto.Util.number
   from hashlib import sha256
   
@@ -70,10 +70,10 @@ print(pow(c,d,N))
 #### Factoring
 - I headed to primefac-fork, where I found another package factordb for larger numbers, I used this package to find the factors of the given number.
 - FactorDB is an online database of integer factorizations.
-- Created an instance _x_ of the class using the given number.
-- Used _x.connect()_ to connect to FactorDB server.
-- _x.get_factor_list()_ gets the list of factors.
-```
+- Created an instance `x` of the class using the given number.
+- Used `x.connect()` to connect to FactorDB server.
+- `x.get_factor_list()` gets the list of factors.
+```python
 from factordb.factordb import FactorDB
 n = 510143758735509025530880200653196460532653147
 x = FactorDB(n)
@@ -81,3 +81,5 @@ x.connect()
 xf = x.get_factor_list()
 print(xf)
 ```
+#### Square Eyes
+- Couldnt understand after lots of research, found a solution online but even that didnt make sense.
