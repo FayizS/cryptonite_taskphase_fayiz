@@ -1,6 +1,7 @@
 # <p align="center">Cryptohack</p>
 ## RSA
-### Modular Exponentiation
+### STARTER:
+#### Modular Exponentiation
 - is an operation that looks like this: 2<sup>10</sup> mod 17.
 - used to build a trapdoor function(easy to compute in one way).
 - To find the solution of 101<sup>17</sup> mod 22663 I used the python function pow(base, exponent, modulus).
@@ -8,14 +9,14 @@
 >>>print(pow(101,17,22663))
 19906
 ```
-### Public Keys
+#### Public Keys
 - Exponent and modulus form of an RSA "public key" is (N,e) where N = p*q (two prime numbers) & e is the Exponent.
 - To "Encrypt" 12, I used the pow() function in python.
 ```
 >>>print(pow(12,65537,17*23))
 301
 ```
-### Euler's Totient
+#### Euler's Totient
 - Is a Multiplicative Function &Phi;(N) which counts the number of primes which are less than a number N.
 - To find the Euler's Totient of N=p*q, I used the formula (p-1)*(q-1).
 ```
@@ -24,7 +25,7 @@ q = 1029224947942998075080348647219
 print((p-1)*(q-1))
 >882564595536224140639625987657529300394956519977044270821168
 ```
-### Private Keys
+#### Private Keys
 - Private Key 'd' is used to decrypt ciphertexts, it's given by d = <sup>-1</sup> mod &Phi;(N)
   ```
   p = 857504083339712752489993810777
@@ -34,7 +35,7 @@ print((p-1)*(q-1))
   print(pow(e,-1,phi))
   >121832886702415731577073962957377780195510499965398469843281
   ```
-### RSA Decryption
+#### RSA Decryption
 - After a bit of research I found that decryption can be done using the formula _data = c<sup>d</sup> mod N_ where c -> cipher text, d -> private key.
 ```
 p = 857504083339712752489993810777
@@ -47,7 +48,7 @@ d = pow(e,-1,phi)
 print(pow(c,d,N))
 > 13371337
 ```
-### RSA Signature
+#### RSA Signature
 -First I tried to do the sha256 encoding using a website, this gave me the wrong signature. Later I did the encoding in python itself and got the correct answer because in python it converts the string to a sequence of bytes then encodes it.
 - _.encode()_ converts string to a sequence of bytes then the _sha256()_ encodes it, and _digest()_ returns it as raw binary data.
 - Signature, _S = H(m)<sup>d</sup> mod N_
@@ -65,4 +66,18 @@ print(pow(c,d,N))
   print(S)
   >13480738404590090803339831649238454376183189744970683129909766078877706583282422686710545217275797376709672358894231550335007974983458408620258478729775647818876610072903021235573923300070103666940534047644900475773318682585772698155617451477448441198150710420818995347235921111812068656782998168064960965451719491072569057636701190429760047193261886092862024118487826452766513533860734724124228305158914225250488399673645732882077575252662461860972889771112594906884441454355959482925283992539925713424132009768721389828848907099772040836383856524605008942907083490383109757406940540866978237471686296661685839083475
   ```
-  
+### PRIMES PART 1
+#### Factoring
+- I headed to primefac-fork, where I found another package factordb for larger numbers, I used this package to find the factors of the given number.
+- FactorDB is an online database of integer factorizations.
+- Created an instance _x_ of the class using the given number.
+- Used _x.connect()_ to connect to FactorDB server.
+- _x.get_factor_list()_ gets the list of factors.
+```
+from factordb.factordb import FactorDB
+n = 510143758735509025530880200653196460532653147
+x = FactorDB(n)
+x.connect()
+xf = x.get_factor_list()
+print(xf)
+```
