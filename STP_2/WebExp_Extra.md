@@ -50,3 +50,23 @@ Connection: keep-alive
 - `GET / HTTP/1.1` -> follows _HTTP Request/response Protocol_ (if it was a response the former won't be there)
 - `Host:`, `User-Agent:` and all are headers, which are key-value pairs which provide data about requests and responses.
 - There are different RFCs specifying the format for each header. 
+
+## SOAP
+The given XML snippet is related to XXE (XML External Entity) injection, and here's an explanation of each part:
+
+<!DOCTYPE foo [ ... ]>
+This line defines a Document Type Definition (DTD) inside the XML document. DTD is used to define the structure and rules of an XML document. The foo part here is just a placeholder name for the document type.
+
+<!DOCTYPE foo: Declares the document type as foo (it can be anything, this is just a name).
+[ ... ]: Everything inside the square brackets is the internal DTD for this XML document.
+<!ENTITY xxe SYSTEM "file:///etc/passwd">
+This line defines an entity called xxe.
+
+<!ENTITY: Begins the entity definition.
+xxe: The name of the entity. This is how you will reference the entity later in the XML document (in this case, &xxe;).
+SYSTEM: This specifies that the entity is an external entity, which means it can point to a file or resource outside the XML document.
+"file:///etc/passwd": The value of the xxe entity. It's pointing to the local system file /etc/passwd, which contains user information on Unix-based systems.
+When this entity is referenced later in the XML, the XML parser will attempt to access the file:///etc/passwd file from the server. If the server allows external entity processing (XXE), it will try to read the contents of the file and insert it into the document.
+
+]>
+This ends the DTD and closes the DOCTYPE declaration.
